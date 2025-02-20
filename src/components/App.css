@@ -134,6 +134,8 @@ div.scroller {
   margin:0.2em;
   padding:0.1em;
   font-size:.9rem;
+  opacity:.9;
+
 }
 .icon{
   font-size:.8rem;
@@ -141,6 +143,7 @@ div.scroller {
 }
 .language-used{
   margin:.4em 0;
+  opacity:.9;
   display:flex;
   justify-content: center;
   padding:.1em;
