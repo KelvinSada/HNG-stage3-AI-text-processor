@@ -55,7 +55,9 @@ body{
   margin: 0 auto; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
   background: radial-gradient(circle at bottom, #1a1a1a, #000000);
-
+  
+  overflow-y: auto;
+  scrollbar-color: pink black;
 }
 
 .selected-output{
@@ -114,27 +116,47 @@ body{
 }
 .output-individual-text{
  font-weight: 700;
+ font-size:1.1rem;
 }
 .output-settings{
-  
+  /* border:2px solid black; */
 }
+div.scroller {
+  width: 300px;
+  height: 100px;
+  overflow-y: scroll;
+  scrollbar-color: pink lightblue;
+} 
 .error{
   color:red;
 }
+.error-lang{
+  margin:0.2em;
+  padding:0.1em;
+  font-size:.9rem;
+}
+.icon{
+  font-size:.8rem;
+  margin-right: .2em;
+}
 .language-used{
-  margin:.5em 0;
+  margin:.4em 0;
   display:flex;
   justify-content: center;
-  padding:.2em;
+  padding:.1em;
   align-items: center;
   align-self:flex-start;
 }
 .language{
   background: rgb(26, 146, 239);
-  border:2px solid rgb(0, 0, 0);
+  /* border:2px solid rgb(0, 0, 0); */
   color:rgb(0, 0, 0);
   padding:.3em;
   margin-right:.2em;
+  outline: none;
+  text-decoration: none;
+  border:none;
+
 }
 .language:hover{
   color:white;
@@ -157,8 +179,6 @@ body{
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  /* width:100%; */
-  /* align-self:stretch; */
 }
 .input-text{
   /* border:2px solid rgb(0, 221, 255); */
@@ -172,7 +192,7 @@ body{
   /* height:100px; */
 }
 .send{
-  background-color: #b5b4b4;
+  background-color: #feb47b;
   border-radius: 10px;
   padding:1.2em;
   font-family: 'Arial', sans-serif;
@@ -224,6 +244,6 @@ color:white;
     font-size: 2rem;
   }
   .output-section{
-    height:55vh;
+    height:61vh;
   }  
 }

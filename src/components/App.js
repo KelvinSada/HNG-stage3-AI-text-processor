@@ -19,145 +19,138 @@ function App() {
   //Language Detector Model
   async function languageDetector(info){
     // console.log(info)
-      const languageDetectorCapabilities = await window.self.ai.languageDetector.capabilities();
-      const canDetect = languageDetectorCapabilities.capabilities;
-      let detector;
-      if (canDetect === 'no') {
-          // The language detector isn't usable.
-          return;
-        }
-        if (canDetect === 'readily') {
-            // The language detector can immediately be used.
-            console.log("can detect")
-            detector = await window.self.ai.languageDetector.create();
-          } 
-          else {
-          // The language detector can be used after model download.
-          // console.log("can detect, but it will delay")
-          detector = await window.self.ai.languageDetector.create({
-              monitor(m) {
-                  m.addEventListener('downloadprogress', (e) => {
-                      // console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
-                    });
-                  },
-                });
-                await detector.ready;
-              }
-              const result = await detector.detect(info)
-              const getLanguage = await result[0]
-              // setFindLanguage(getLanguage);
-
-              if (getLanguage){
-                let value = ""
-                // console.log(findLanguage.detectedLanguage)
-                switch (getLanguage.detectedLanguage) {
-                  case "en":
-                    value = "English";
-                    break;
-                    case "pt":
-                      value = "Portuguese";
-                      break;
-                    case "es":
-                      value = "Spanish"; 
-                      break;
-                    case "ru":
-                      value = "Russian";
-                      break;
-                    case "tr":
-                      value = "Turkish";
-                      break;
-                    case "fr":
-                     value = "French";
-                      break;
-                      default:
-                        break;
-                      }
-                setInput(prev=>{
-                  return{
-                    ...prev,
-                    language:value,
-                  }
-                })
-              } else{
-                // console.log("nothing")
-              }
-            }
-            
-            
-            //Translator Model
-            async function languageTranslation(prop){
-              // console.log(prop.initialLanguage)
-              // console.log(prop.value)
-              // console.log(prop.text)
-
-
-              const translatorCapabilities = await window.self.ai.translator.capabilities();
-              translatorCapabilities.languagePairAvailable('es', 'fr');
-            
-            
-              // Create a translator that translates from English to French.
-              // const translator = await window.self.ai.translator.create({
-              //   sourceLanguage: 'en',
-              //   targetLanguage: 'fr',
-              //   });
-              
-                try{
-
-                  const translator = await window.self.ai.translator.create({
-                    sourceLanguage: prop.initialLanguage,
-                    targetLanguage: prop.value,
-                    monitor(m) {
-                      m.addEventListener('downloadprogress', (e) => {
-                        console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
-                      });
-                    },
+    const languageDetectorCapabilities = await window.self.ai.languageDetector.capabilities();
+    const canDetect = languageDetectorCapabilities.capabilities;
+    let detector;
+    if (canDetect === 'no') {
+        // The language detector isn't usable.
+        return;
+      }
+    if (canDetect === 'readily') {
+          // The language detector can immediately be used.
+          detector = await window.self.ai.languageDetector.create();
+      } 
+    else {
+      // The language detector can be used after model download.
+      detector = await window.self.ai.languageDetector.create({
+            monitor(m) {
+                m.addEventListener('downloadprogress', (e) => {
+                    // console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
                   });
-                  const translatedText = await translator.translate(prop.text);
-                  // console.log(translatedText)
-                  setTranslationText(translatedText)
-                  
-                  saveOutput[prop.id].trans =translatedText;
-                }
-                catch(e){
-                  alert("Theres a problem with the translation")
-                }
+                },
+              });
+              await detector.ready;
+        }
+        const result = await detector.detect(info)
+        const getLanguage = await result[0]
+        // setFindLanguage(getLanguage);
 
-        
-                    }
+          if (getLanguage){
+            let value = ""
+            // console.log(findLanguage.detectedLanguage)
+            switch (getLanguage.detectedLanguage) {
+              case "en":
+                value = "English";
+                break;
+                case "pt":
+                  value = "Portuguese";
+                  break;
+                case "es":
+                  value = "Spanish"; 
+                  break;
+                case "ru":
+                  value = "Russian";
+                  break;
+                case "tr":
+                  value = "Turkish";
+                  break;
+                case "fr":
+                  value = "French";
+                  break;
+                      default:
+                      break;
+                      }
+          setInput(prev=>{
+              return{
+                ...prev,
+                language:value,
+              }
+            })
+          } else{
+            // console.log("nothing")
+          }
+        }
+            
+            
+      //Translator Model
+      async function languageTranslation(prop){
+        // console.log(prop.initialLanguage)
+        // console.log(prop.value)
+        // console.log(prop.text)
+
+
+        const translatorCapabilities = await window.self.ai.translator.capabilities();
+        translatorCapabilities.languagePairAvailable('es', 'fr');
+            
+            
+        // Create a translator that translates from English to French.
+        // const translator = await window.self.ai.translator.create({
+        //   sourceLanguage: 'en',
+        //   targetLanguage: 'fr',
+        //   });
+              
+          try{
+
+            const translator = await window.self.ai.translator.create({
+              sourceLanguage: prop.initialLanguage,
+              targetLanguage: prop.value,
+              monitor(m) {
+                m.addEventListener('downloadprogress', (e) => {
+                  console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+                });
+              },
+            });
+            const translatedText = await translator.translate(prop.text);
+            // console.log(translatedText)
+            setTranslationText(translatedText)
+                  
+            saveOutput[prop.id].trans =translatedText;
+          }
+          catch(e){
+            alert("Theres a problem with the translation")
+          }
+        }
                     
-                    // languageTranslation()
                     
-                    
-                    
-                    //Summarizer Model
-                    const options = {
-                        sharedContext: 'This is a scientific article',
-                        type: 'key-points',
-                        format: 'markdown',
-                        length: 'medium',
-                      };
+        //Summarizer Model
+        const options = {
+            sharedContext: 'This is a scientific article',
+            type: 'key-points',
+            format: 'markdown',
+            length: 'medium',
+          };
                       
-                      async function Summarizer(val,index){
-                        console.log(val)
-                        console.log(index)
+          async function Summarizer(val,index){
+            console.log(val)
+            console.log(index)
                         
-                        const available = (await window.self.ai.summarizer.capabilities()).available;
-                        let summarizer;
-                        if (available === 'no') {
-                            console.log("summarizer api is not working")
+            const available = (await window.self.ai.summarizer.capabilities()).available;
+            let summarizer;
+            if (available === 'no') {
+                console.log("summarizer api is not working")
                             // The Summarizer API isn't usable.
-                            return;
-                          }
-                          if (available === 'readily') {
-                              console.log("summarizer api is working")
-                              // The Summarizer API can be used immediately .
-                              summarizer = await window.self.ai.summarizer.create(options);
-                            } else {
-                                console.log("summarizer api will work, just has to download some sturfs")
+                return;
+              }
+              if (available === 'readily') {
+              console.log("summarizer api is working")
+              // The Summarizer API can be used immediately .
+              summarizer = await window.self.ai.summarizer.create(options);
+            } else {
+                console.log("summarizer api will work, just has to download some sturfs")
                             
-                                // The Summarizer API can be used after the model is downloaded.
-                                summarizer = await window.self.ai.summarizer.create(options);
-                                summarizer.addEventListener('downloadprogress', (e) => {
+                // The Summarizer API can be used after the model is downloaded.
+                summarizer = await window.self.ai.summarizer.create(options);
+                summarizer.addEventListener('downloadprogress', (e) => {
             console.log(e.loaded, e.total);
           });
           await summarizer.ready;
@@ -165,8 +158,6 @@ function App() {
         const summary = await summarizer.summarize(val)
           console.log(summary)
       }
-      // Summarizer()
-      
       
       
       function getText(event){
@@ -181,22 +172,11 @@ function App() {
         })
 
         languageDetector(info)
-
-        
-        //   setOutput(prev=>{
-        //     return{
-        //       ...prev,
-        //       language:value
-        //     }
-        //   })
-        // // setText(event.target.value)
-        
       }
-      function summary(val,index){
-        // console.log(val)
-        // console.log(index)
-      Summarizer(val,index)
 
+
+      function summary(val,index){
+      Summarizer(val,index)
       }
 
 
@@ -246,6 +226,7 @@ function App() {
               // console.log(initialLanguage)
         languageTranslation({value,text,initialLanguage,id})
       }
+      
   return (
     <div className="App">
       <header className="header"><h1 className="header-text">NKS AI</h1></header>
