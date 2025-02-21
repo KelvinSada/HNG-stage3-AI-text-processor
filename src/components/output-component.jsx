@@ -4,11 +4,11 @@ function OutputComponent(prop){
   const array = prop.array;
   const specialTrans = array[prop.id].trans
   
-  if (specialTrans){
-    console.log("hello")
-  } else{
-    console.log("Goodbye")
-  }
+  // if (specialTrans){
+  //   console.log("hello")
+  // } else{
+  //   console.log("Goodbye")
+  // }
   
   const getInitialState = () => {
     const value = "Select Language";
@@ -22,10 +22,12 @@ function OutputComponent(prop){
     // console.log(language)
     setValue(language);
   };
-  
-  console.log(prop.language.length)
+  console.log(prop.language)
+
+console.log(array[prop.id].characterNumber)
   return(
     <div className="selected-output">
+    {/* {prop.loading?<h1>Loading...</h1>:null} */}
       <div className="sender-output">
         <div className="output-individual-text"><p>{prop.text}</p></div>
           {prop.language.length>0?<p className="language-used"><span className="icon">🟢</span> {prop.language}</p>:<p className="error-lang">🔴 No Language Detected</p>}
@@ -40,7 +42,7 @@ function OutputComponent(prop){
             <option value="fr">French(fr)</option>
           </select>
           <button aria-label="translate" className="translate" onClick={()=>prop.action(value,prop.text,prop.language,prop.id)}>Translate</button>
-          {/* {prop.language == "English" ?<button className="summary" onClick={()=>prop.summaryAction(prop.text,prop.id)}>Summarise</button>:null} */}
+          {prop.language === "English" && array[prop.id].characterNumber>150 ?<button className="summary" onClick={()=>prop.summaryAction(prop.text,prop.id)}>Summarise</button>:null}
         </div>:null}
       </div>
       {specialTrans&&<div className="receiver-output">

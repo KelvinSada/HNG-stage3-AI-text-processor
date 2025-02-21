@@ -13,7 +13,7 @@ function App() {
   const [saveOutput,setSaveOutput] = useState([])
   const [,setTranslationText] = useState("");
   const [,setNoOfCharacters] = useState(0)
-
+  const [,setLoading] = useState(false)
 
 
   //Language Detector Model
@@ -93,12 +93,6 @@ function App() {
         translatorCapabilities.languagePairAvailable('es', 'fr');
             
             
-        // Create a translator that translates from English to French.
-        // const translator = await window.self.ai.translator.create({
-        //   sourceLanguage: 'en',
-        //   targetLanguage: 'fr',
-        //   });
-              
           try{
 
             const translator = await window.self.ai.translator.create({
@@ -125,15 +119,16 @@ function App() {
         //Summarizer Model
         const options = {
             sharedContext: 'This is a scientific article',
-            type: 'key-points',
-            format: 'markdown',
-            length: 'medium',
+            type: 'headline',
+            format: 'plain-text',
+            length: 'short',
           };
                       
           async function Summarizer(val,index){
             console.log(val)
             console.log(index)
-                        
+
+           
             const available = (await window.self.ai.summarizer.capabilities()).available;
             let summarizer;
             if (available === 'no') {
@@ -155,11 +150,27 @@ function App() {
           });
           await summarizer.ready;
         }
-        const summary = await summarizer.summarize(val)
-          console.log(summary)
+
+        const longText = val
+
+        setLoading(true)
+        saveOutput[index].trans = "Loading Summary.."
+
+        const summary = await summarizer.summarize(longText)
+        console.log(summary)
+
+
+        saveOutput[index].trans = summary
+        setLoading(false)
+        // setLoading(false)
+        // saveOutput[prop.id].trans =translatedText
+      // const [saveOutput,setSaveOutput] = useState([])
+
       }
       
-      
+      // Summarizer()
+
+
       function getText(event){
         const info = event.target.value;
         setNoOfCharacters(info.length)
@@ -232,9 +243,12 @@ function App() {
       <header className="header"><h1 className="header-text">NKS AI</h1></header>
       <div className="ai-powered-text-processor">
       <section className="output-section">
+      {/* {loading?<h1 className="loading">Loading...</h1>:null} */}
+
       {saveOutput.length === 0?<h1 className="hello">Hello there <span className="hand"> 👋</span></h1>:saveOutput.map((outputItem,index)=>(
-              <OutputComponent  array={saveOutput} summaryAction={summary} character={input.characterNumber} action={translation} trans={outputItem.trans} key={index} id={index} text={outputItem.text} language={outputItem.language}/>
+              <OutputComponent array={saveOutput} summaryAction={summary} character={input.characterNumber} action={translation} trans={outputItem.trans} key={index} id={index} text={outputItem.text} language={outputItem.language}/>
             ))}
+            
        </section>
        <section className="input-section">
          <textarea aria-label="write-texts" value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
