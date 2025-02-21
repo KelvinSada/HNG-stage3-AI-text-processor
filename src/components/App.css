@@ -170,6 +170,8 @@ div.scroller {
   border:2px solid black;
   padding:.3em;
   background: rgb(26, 146, 239);
+  border-radius:5px;
+
 }
 .translate:hover{
   color:white;
@@ -179,7 +181,12 @@ div.scroller {
   padding:.3em;
   background: rgb(26, 146, 239);
   margin:.2em;
+  border-radius:5px;
 }
+.summary:hover{
+  color:white;
+}
+
 .input-section{
   display:flex;
   background-color: #151515;

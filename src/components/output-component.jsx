@@ -42,7 +42,7 @@ console.log(array[prop.id].characterNumber)
             <option value="fr">French(fr)</option>
           </select>
           <button aria-label="translate" className="translate" onClick={()=>prop.action(value,prop.text,prop.language,prop.id)}>Translate</button>
-          {prop.language === "English" && array[prop.id].characterNumber>150 ?<button className="summary" onClick={()=>prop.summaryAction(prop.text,prop.id)}>Summarise</button>:null}
+          {prop.language === "English" && array[prop.id].characterNumber>150 ?<button className="summary" onClick={()=>prop.summaryAction(prop.text,prop.id)}>Summarize</button>:null}
         </div>:null}
       </div>
       {specialTrans&&<div className="receiver-output">
