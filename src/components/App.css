@@ -103,7 +103,8 @@ body{
   border-radius: 10px 10px 10px 0;
  font-weight: 700;
  opacity: 0; 
- animation: fadeOut .5s ease-in-out forwards; 
+ animation: fadeOut .5s ease-in-out forwards;
+  
 }
 @keyframes fadeOut {
   from {
@@ -141,6 +142,17 @@ div.scroller {
 .icon{
   font-size:.8rem;
   margin-right: .2em;
+  animation: beep 1s infinite;
+}
+@keyframes beep {
+  0%, 100% {
+    /* transform: scale(1); */
+    opacity: 1;
+  }
+  50% {
+    /* transform: scale(1.2); */
+    opacity: 0.5;
+  }
 }
 .language-used{
   margin:.4em 0;

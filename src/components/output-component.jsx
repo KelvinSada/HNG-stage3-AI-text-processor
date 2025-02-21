@@ -30,7 +30,7 @@ console.log(array[prop.id].characterNumber)
     {/* {prop.loading?<h1>Loading...</h1>:null} */}
       <div className="sender-output">
         <div className="output-individual-text"><p>{prop.text}</p></div>
-          {prop.language.length>0?<p className="language-used"><span className="icon">🟢</span> {prop.language}</p>:<p className="error-lang">🔴 No Language Detected</p>}
+          {prop.language.length>0?<p className="language-used"><span className="icon">🟢</span> {prop.language}</p>:<p className="error-lang"><span className="icon">🔴</span> No Language Detected</p>}
           {prop.language.length>0?<div className="output-settings">
           <select aria-label="select-language" value={value} onChange={handleChange} id="language" className="language" name="language">
             <option value="">Select Language</option>
