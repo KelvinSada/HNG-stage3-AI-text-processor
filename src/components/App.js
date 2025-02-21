@@ -237,8 +237,8 @@ function App() {
             ))}
        </section>
        <section className="input-section">
-         <textarea value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
-         <button className="send" onClick={handleSubmit}>Send</button>
+         <textarea aria-label="write-texts" value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
+         <button aria-label="send" className="send" onClick={handleSubmit}>Send</button>
        </section>
      </div>
     </div>

@@ -30,7 +30,7 @@ function OutputComponent(prop){
         <div className="output-individual-text"><p>{prop.text}</p></div>
           {prop.language.length>0?<p className="language-used"><span className="icon">🟢</span> {prop.language}</p>:<p className="error-lang">🔴 No Language Detected</p>}
           {prop.language.length>0?<div className="output-settings">
-          <select value={value} onChange={handleChange} id="language" className="language" name="language">
+          <select aria-label="select-language" value={value} onChange={handleChange} id="language" className="language" name="language">
             <option value="">Select Language</option>
             <option value="en">English(en)</option>
             <option value="pt">Portuguese(pt)</option>
@@ -39,7 +39,7 @@ function OutputComponent(prop){
             <option value="tr">Turkish(tr)</option>
             <option value="fr">French(fr)</option>
           </select>
-          <button className="translate" onClick={()=>prop.action(value,prop.text,prop.language,prop.id)}>Translate</button>
+          <button aria-label="translate" className="translate" onClick={()=>prop.action(value,prop.text,prop.language,prop.id)}>Translate</button>
           {/* {prop.language == "English" ?<button className="summary" onClick={()=>prop.summaryAction(prop.text,prop.id)}>Summarise</button>:null} */}
         </div>:null}
       </div>
