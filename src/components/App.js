@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import OutputComponent from "./output-component";
+import { FiSend } from "react-icons/fi";
 
 function App() {
   const [input,setInput] = useState({
@@ -14,7 +15,6 @@ function App() {
   const [,setTranslationText] = useState("");
   const [,setNoOfCharacters] = useState(0)
   const [,setLoading] = useState(false)
-
 
   //Language Detector Model
   async function languageDetector(info){
@@ -252,7 +252,7 @@ function App() {
        </section>
        <section className="input-section">
          <textarea aria-label="write-texts" value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
-         <button aria-label="send" className="send" onClick={handleSubmit}>Send</button>
+         <button aria-label="send" className="send" onClick={handleSubmit}><FiSend className="sendIcon"/></button>
        </section>
      </div>
     </div>

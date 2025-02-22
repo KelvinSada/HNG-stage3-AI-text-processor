@@ -139,6 +139,10 @@ div.scroller {
   opacity:.9;
 
 }
+.sendIcon{
+  font-size:1.5rem;
+  padding:0;
+}
 .icon{
   font-size:.8rem;
   margin-right: .2em;
@@ -227,7 +231,7 @@ div.scroller {
 .send{
   background-color: #feb47b;
   border-radius: 10px;
-  padding:1.2em;
+  padding:.9em;
   font-family: 'Arial', sans-serif;
   font-weight: 500;
   font-size:1rem;
