@@ -245,7 +245,10 @@ function App() {
       <section className="output-section">
       {/* {loading?<h1 className="loading">Loading...</h1>:null} */}
 
-      {saveOutput.length === 0?<h1 className="hello">Hello there <span className="hand"> 👋</span></h1>:saveOutput.map((outputItem,index)=>(
+      {saveOutput.length === 0?<div class="initial-text">
+      <h2 className="hello">Hello there <span className="hand"> 👋</span></h2>
+      <p className="follow-texts">Identifies written language, translates text into multiple languages, summarize long texts.</p>
+      </div>:saveOutput.map((outputItem,index)=>(
               <OutputComponent array={saveOutput} summaryAction={summary} character={input.characterNumber} action={translation} trans={outputItem.trans} key={index} id={index} text={outputItem.text} language={outputItem.language}/>
             ))}
             
