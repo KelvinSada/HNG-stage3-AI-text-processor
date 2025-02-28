@@ -263,7 +263,7 @@ function App() {
       </div>:saveOutput.map((outputItem,index)=>(
               <OutputComponent array={saveOutput} summaryAction={summary} character={input.characterNumber} action={translation} trans={outputItem.trans} key={index} id={index} text={outputItem.text} language={outputItem.language}/>
             ))}
-        <div ref={bottomOfPanelRef}></div>
+        {saveOutput.length > 0&&<div ref={bottomOfPanelRef}></div>}
        </section>
        <section className="input-section">
          <textarea aria-label="write-texts" value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
