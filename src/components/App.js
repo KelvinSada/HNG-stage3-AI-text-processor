@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import OutputComponent from "./output-component";
 import { FiSend } from "react-icons/fi";
@@ -12,9 +12,11 @@ function App() {
     error:false
   })
   const [saveOutput,setSaveOutput] = useState([])
-  const [,setTranslationText] = useState("");
+  const [translationText,setTranslationText] = useState("");
   const [,setNoOfCharacters] = useState(0)
-  const [,setLoading] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const bottomOfPanelRef =useRef(null)
+
 
   //Language Detector Model
   async function languageDetector(info){
@@ -168,7 +170,6 @@ function App() {
 
       }
       
-      // Summarizer()
 
 
       function getText(event){
@@ -237,6 +238,18 @@ function App() {
               // console.log(initialLanguage)
         languageTranslation({value,text,initialLanguage,id})
       }
+
+      // const bottomOfPanelRef = useRef<HTMLDivElement>(null)
+        
+      
+      useEffect(()=>{
+        if (bottomOfPanelRef.current){
+          bottomOfPanelRef.current.scrollIntoView(
+            {behavior:"smooth",inline:"nearest"}
+          )
+        }
+      },[saveOutput,translationText,loading])
+      console.log(saveOutput)
       
   return (
     <div className="App">
@@ -244,14 +257,13 @@ function App() {
       <div className="ai-powered-text-processor">
       <section className="output-section">
       {/* {loading?<h1 className="loading">Loading...</h1>:null} */}
-
       {saveOutput.length === 0?<div class="initial-text">
       <h2 className="hello">Hello there <span className="hand"> 👋</span></h2>
       <p className="follow-texts">Identifies written language, translates text into multiple languages, summarize long texts.</p>
       </div>:saveOutput.map((outputItem,index)=>(
               <OutputComponent array={saveOutput} summaryAction={summary} character={input.characterNumber} action={translation} trans={outputItem.trans} key={index} id={index} text={outputItem.text} language={outputItem.language}/>
             ))}
-            
+        <div ref={bottomOfPanelRef}></div>
        </section>
        <section className="input-section">
          <textarea aria-label="write-texts" value={input.text} placeholder="Write here..." onChange={getText} className="input-text"/>
